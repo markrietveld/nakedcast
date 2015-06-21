@@ -13,5 +13,6 @@ public class ItunesResponse {
         public String artworkUrl30;
         public String artworkUrl60;
         public String artworkUrl100;
+        public String collectionName;
     }
 }
