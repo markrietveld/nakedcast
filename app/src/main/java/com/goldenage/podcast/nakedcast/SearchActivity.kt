@@ -9,10 +9,7 @@ import android.support.v7.widget.SearchView
 import android.support.v7.widget.Toolbar
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.ListView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import butterknife.bindView
 import com.goldenage.podcast.nakedcast.model.ItunesResponse
 import com.goldenage.podcast.nakedcast.network.Itunes
@@ -30,10 +27,10 @@ open class SearchActivity : AppCompatActivity() {
         setContentView(R.layout.search_screen)
 
         val inflater = getMenuInflater()
-        inflater.inflate(R.menu.search, toolbar.getMenu());
+        inflater.inflate(R.menu.search, toolbar.getMenu())
         val searchView = toolbar.getMenu().findItem(R.id.search).getActionView() as SearchView
 
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager;
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()))
 
         toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
@@ -55,6 +52,7 @@ open class SearchActivity : AppCompatActivity() {
         })
         
         listView.setAdapter(searchResultAdapter)
+        listView.setOnItemClickListener(searchResultAdapter)
     }
 
     private fun search(query: String) {
@@ -85,7 +83,7 @@ open class SearchActivity : AppCompatActivity() {
         }
     }
     
-    private class SearchResultAdapter : BaseAdapter {
+    private class SearchResultAdapter : BaseAdapter, AdapterView.OnItemClickListener {
 
         private var activity: Activity
         private var items: List<ItunesResponse.Podcast> = Collections.emptyList()
@@ -128,5 +126,8 @@ open class SearchActivity : AppCompatActivity() {
             return position.toLong()
         }
 
+        override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+            activity.startActivity(getIntent(activity, getItem(position).feedUrl))
+        }
     }
 }

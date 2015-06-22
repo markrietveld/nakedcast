@@ -30,6 +30,9 @@ dependencies {
     // Network
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile ('com.thoughtworks.xstream:xstream:1.4.7') {
+        exclude group: 'xmlpull', module: 'xmlpull'
+    }
     
     // UI
     compile 'com.jakewharton:kotterknife:0.1.0-SNAPSHOT'
